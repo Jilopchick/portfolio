@@ -1,0 +1,117 @@
+class Money():
+    def __init__(self, rubles = 0, kopeks = 0):
+        self.rubles = rubles + kopeks // 100
+        self.kopeks = kopeks % 100
+
+    def __str__(self):
+        if self.kopeks < 10:
+            return str(self.rubles) + ',0' + str(self.kopeks)
+        else:
+            return str(self.rubles) + ',' + str(self.kopeks)
+
+    def __add__(self, other):
+        result = Money(0, 0)
+        result.rubles = self.rubles + other.rubles
+        result.kopeks = self.kopeks + other.kopeks
+        if result.kopeks > 100:
+            result.kopeks -= 100
+            result.rubles += 1
+        return result
+    
+    def __sub__(self, other):
+        rubles = self.rubles - other.rubles
+        kopeks = self.kopeks - other.kopeks
+        if kopeks < 0:
+            kopeks += 100
+            rubles -= 1
+        return Money(rubles, kopeks)
+    
+    def __truediv__(self, other):
+        if isinstance(other, Money):
+            return (self.rubles * 100 + self.kopeks) / (other.rubles * 100 + other.kopeks)
+        elif isinstance(other, float) or isinstance(other, int):
+            allKopeks = self.rubles * 100 + self.kopeks
+            allKopeks /= other
+            allKopeks = int(allKopeks)
+            return Money(allKopeks // 100, allKopeks % 100)
+
+    def __mul__(self, other):
+        allKopeks = self.rubles * 100 + self.kopeks
+        allKopeks *= other
+        allKopeks = int(allKopeks)
+        return Money(allKopeks // 100, allKopeks % 100)
+
+    def __rmul__(self, other):
+        return self * other
+
+
+    def __eq__(self, other): # ==
+        return self.rubles == other.rubles and self.kopeks == other.kopeks
+    def __ne__(self, other): # !=
+        return self.rubles != other.rubles or self.kopeks != other.kopeks
+    def __lt__(self, other): # <
+        return self.rubles < other.rubles or (self.rubles == other.rubles and self.kopeks < other.kopeks)
+    def __le__(self, other): # <=
+        return self.rubles < other.rubles or (self.rubles == other.rubles and self.kopeks <= other.kopeks)
+    def __gt__(self, other): # >
+        return self.rubles > other.rubles or (self.rubles == other.rubles and self.kopeks > other.kopeks)
+    def __ge__(self, other): # >=
+        return self.rubles > other.rubles or (self.rubles == other.rubles and self.kopeks >= other.kopeks)
+
+
+
+def inp():
+    rubles = int(input("Введите рубли:"))
+    kopeks = int(input("Введите копейки:"))
+    return Money(rubles, kopeks)
+
+def main():
+
+    print("\nСложение")
+    m1 = inp()
+    m2 = inp()
+    
+    print(m1 + m2)
+
+    print("\nВычитание")
+    m1 = inp()
+    m2 = inp()
+
+    print(m1 - m2)
+    
+    print("\nДеление сумм")
+    m1 = inp()
+    m2 = inp()
+
+    print(m1 / m2)
+
+    print("\nДеление на число")
+    m1 = inp()
+    chislo = int(input("Введите число:"))
+
+    print(m1 / chislo)
+
+    print("\nУмножение")
+    m1 = inp()
+    chislo = int(input("Введите число:"))
+
+    print(m1 * chislo)
+
+
+    print("\n\nСравнения")
+    m1 = inp()
+    m2 = inp()
+
+    print(m1 == m2)
+
+    print(m1 != m2)
+
+    print(m1 > m2)
+
+    print(m1 >= m2)
+
+    print(m2 < m2)
+
+    print(m1 <= m2)
+
+main()

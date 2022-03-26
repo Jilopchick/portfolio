@@ -1,0 +1,7 @@
+C:\Users\Админ\Downloads\Портфолио\From courses\Console diary\bin\Debug\Homework_07.exe.config
+C:\Users\Админ\Downloads\Портфолио\From courses\Console diary\bin\Debug\Homework_07.exe
+C:\Users\Админ\Downloads\Портфолио\From courses\Console diary\bin\Debug\Homework_07.pdb
+C:\Users\Админ\Downloads\Портфолио\From courses\Console diary\obj\Debug\Homework.csproj.AssemblyReference.cache
+C:\Users\Админ\Downloads\Портфолио\From courses\Console diary\obj\Debug\Homework.csproj.CoreCompileInputs.cache
+C:\Users\Админ\Downloads\Портфолио\From courses\Console diary\obj\Debug\Homework_07.exe
+C:\Users\Админ\Downloads\Портфолио\From courses\Console diary\obj\Debug\Homework_07.pdb

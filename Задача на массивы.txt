@@ -1,0 +1,300 @@
+#include <iostream> 
+#include <iomanip>
+#include <fstream>
+#include <conio.h>
+#include <ctime>
+#include <Windows.h>
+
+using namespace std;
+
+void generationVector(int* arraySort, int lengthArray)//Функция,которая генерирует элементы для вектора определенной длины.
+{
+	srand(time(0)); 
+	for (int i = 0; i < lengthArray; i++)
+	{
+		arraySort[i] = rand() % 5001;
+	}
+
+}
+
+void selectionSort(int* arraySort, int size)//Функция,которая реализует метод сортировки выбором.
+{
+	int tmp = 0;
+	for (int i = 0; i < size; i++)
+	{
+		int minIndex = i;
+
+		for (int j = i; j < size; j++)
+		{
+			if (arraySort[j] < arraySort[minIndex])
+			{
+				minIndex = j;
+			}
+		}
+
+		if (i != minIndex)
+		{
+			tmp = arraySort[i];
+			arraySort[i] = arraySort[minIndex];
+			arraySort[minIndex] = tmp;
+		}
+	}
+}
+
+void quickSort(int* arraySort, int size)//Функция, которая реализует метод сортировки выбором.
+{
+	//Указатели в начало и в конец массива
+	int begin = 0;
+	int ending = size - 1;
+
+	//Центральный элемент массива
+	int middle = arraySort[size / 2];
+
+	//Делим массив
+	do {
+		//Пробегаем элементы, ищем те, которые нужно перекинуть в другую часть
+		//В левой части массива пропускаем(оставляем на месте) элементы, которые меньше центрального
+		while (arraySort[begin] < middle) {
+			begin++;
+		}
+		//В правой части пропускаем элементы, которые больше центрального
+		while (arraySort[ending] > middle) {
+			ending--;
+		}
+
+		//Меняем элементы местами
+		if (begin <= ending) {
+			int tmp = arraySort[begin];
+			arraySort[begin] = arraySort[ending];
+			arraySort[ending] = tmp;
+
+			begin++;
+			ending--;
+		}
+	} while (begin <= ending);
+
+
+	//Рекурсивные вызовы, если осталось, что сортировать
+	if (ending > 0) {
+		//"Левый кусок"
+		quickSort(arraySort, ending + 1);
+	}
+	if (begin < size) {
+		//"Првый кусок"
+		quickSort(&arraySort[begin], size - begin);
+	}
+}
+
+void menuProgram()//Меню программы.
+{
+	system("cls");
+	cout << "==========================================" << endl;
+	cout << "||        PROGRAM FOR SORTING ITEMS.    ||" << endl;
+	cout << "==========================================" << endl;
+	cout << "||                  Menu                ||" << endl;
+	cout << "||1.Generate a vector of random numbers.||" << endl;
+	cout << "||   2.Display sorting on the screen.   ||" << endl;
+	cout << "||      3.Calculating sorting time.     ||" << endl;
+	cout << "||    4.Writing the result to a file.   ||" << endl;
+	cout << "||    5.Reading sorting from a file.    ||" << endl;
+	cout << "||  6.Display the result on the screen. ||" << endl;
+	cout << "||               Esc.Exit               ||" << endl;
+	cout << "==========================================" << endl;
+}
+
+int main()
+{
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+
+	srand (time(NULL));
+
+	const int arrayNumber[] = { 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000 };//Массив, содержащий число елемнтов для сортировки.
+	const int lengthArray = 1000;
+	
+	const int rows = 11;
+	const int cols = 2;
+	int arrayResults[rows][cols];//Массив, в котором сохраняется время сортировок.
+
+	int* arraySort = new int[lengthArray];
+	int* arraySorthelp = new int[lengthArray];
+
+	int lengthArraydemnstr = 15;//Длина массиова для демонстрации работы сортировок. 
+
+	int startTime, endTime;
+
+	char pressedKey = 'o';
+
+	while (pressedKey != 27)
+	{
+		menuProgram();
+
+		pressedKey = _getch();
+
+		system("cls");
+
+		switch (pressedKey)
+		{
+		case('1'):
+		{
+			generationVector(arraySort, lengthArray);
+			cout << "\tRandom number generation is complete, press the key to continue.";
+		}
+		_getch();
+		break;
+
+		case('2'):
+		{
+			cout << "Unsorted vector:\n";
+		for (int i = 0; i < lengthArraydemnstr; i++)
+		{
+			cout << arraySort[i] << ",";
+		}
+		cout << arraySort[lengthArraydemnstr -1] << ".";
+		cout << '\n' << '\n';
+
+		for (int i = 0; i < lengthArraydemnstr; i++)
+		{
+			arraySorthelp[i] = arraySort[i];
+		}
+
+		selectionSort(arraySorthelp, lengthArraydemnstr);
+		cout << "SelectionSort:" << endl;
+		for (int i = 0; i < lengthArraydemnstr; i++)
+		{
+			cout << arraySorthelp[i] << ",";
+		}
+		cout << arraySorthelp[lengthArraydemnstr -1] << ".";
+		cout << '\n'<<'\n';
+
+		for (int i = 0; i < lengthArraydemnstr; i++)
+		{
+			arraySorthelp[i] = arraySort[i];
+		}
+
+		quickSort(arraySorthelp, lengthArraydemnstr);
+		cout << "QuickSort:" << endl;
+		for (int i = 0; i < lengthArraydemnstr; i++)
+		{
+			cout << arraySorthelp[i] << ",";
+		}
+		cout << arraySorthelp[lengthArraydemnstr -1] << ".";
+
+		cout << '\n' << '\n';
+
+		}
+		cout << "Press the key to continue.";
+		_getch();
+		break;
+		
+		case('3'):
+		{
+			for (int i = 0; i < rows; i++)
+			{
+				startTime = clock();//
+				for (int j = 0; j < 1000; j++)//Цикл, который выполняет роль задержки.
+				{
+					for (int l = 0; l < arrayNumber[i]; l++)
+					{
+						arraySorthelp[l] = arraySort[l];
+					}
+					selectionSort(arraySorthelp, arrayNumber[i]);
+				}
+				endTime = clock();
+
+				arrayResults[i][0] = endTime - startTime;
+
+			}
+
+			for (int i = 0; i < rows; i++)
+			{
+				startTime = clock();
+				for (int j = 0; j < 1000; j++)//Цикл, который выполняет роль задержки.
+				{
+					for (int l = 0; l < arrayNumber[i]; l++)
+					{
+						arraySorthelp[l] = arraySort[l];
+					}
+					quickSort(arraySorthelp, arrayNumber[i]);
+				}
+				endTime = clock();
+				arrayResults[i][1] = endTime - startTime;
+
+			}
+
+			cout << "\tThe sorting time was calculated,press any key to continue.";
+
+		}
+		_getch();
+		break;
+		
+
+		case('4'):
+		{
+			ofstream writieTofile;
+			writieTofile.open("resultOfsorting.txt");
+			
+				for (int i = 0; i < rows; i++)
+				{
+					writieTofile << setw(5) << arrayNumber[i];
+					for (int j = 0; j < cols; j++)
+					{
+						writieTofile << setw(10) << arrayResults[i][j];
+					}
+					writieTofile << '\n';
+				}
+				writieTofile.close();
+			
+				cout << "\tWriting to the file was successful, press the key to continue." << endl;
+		}
+		_getch();
+		break;
+
+		case('5'):
+		{
+			int temp;
+			ifstream readingFromfile;
+				readingFromfile.open("resultOfsorting.txt");
+				for (int i = 0; i < rows; i++)
+				{
+					readingFromfile >> temp;
+
+					for (int j = 0; j < cols; j++)
+					{
+						readingFromfile >> arrayResults[i][j];
+					}
+				}
+				readingFromfile.close();
+			
+
+			cout << "\tReading from the file was successful, press the key to continue." << endl;
+		}
+		_getch();
+		break;
+
+		case '6': 
+		{
+			cout << setw(5) << "Number_Of_Vector_elements";
+			cout << setw(21) << "Selection_Sort[mls]";
+			cout << setw(17) << "Quick_Sort[mls]" << endl;
+			for (int i = 0; i < rows; i++)
+			{
+				cout << setw(17) << arrayNumber[i];
+				for (int j = 0; j < cols; j++)
+				{
+					cout << setw(20) << arrayResults[i][j];
+				}
+				cout << endl;
+			}
+		}
+		_getch();
+		break;
+	
+	   }
+	}
+
+	delete[] arraySort;
+	delete[] arraySorthelp;
+
+	return 0;
+}

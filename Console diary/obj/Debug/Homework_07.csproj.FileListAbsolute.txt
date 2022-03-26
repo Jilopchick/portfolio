@@ -1,0 +1,6 @@
+C:\disk d\skillbox\уроки\Theme_07\Homework_07\bin\Debug\Homework_07.exe.config
+C:\disk d\skillbox\уроки\Theme_07\Homework_07\bin\Debug\Homework_07.exe
+C:\disk d\skillbox\уроки\Theme_07\Homework_07\bin\Debug\Homework_07.pdb
+C:\disk d\skillbox\уроки\Theme_07\Homework_07\obj\Debug\Homework_07.csprojAssemblyReference.cache
+C:\disk d\skillbox\уроки\Theme_07\Homework_07\obj\Debug\Homework_07.exe
+C:\disk d\skillbox\уроки\Theme_07\Homework_07\obj\Debug\Homework_07.pdb
